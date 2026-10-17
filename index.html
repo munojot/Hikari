@@ -1924,8 +1924,8 @@
         <!-- Katakana Chart Banner -->
         <div id="katakanaChartBanner" class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-rose-50 border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="flex items-center gap-3.5">
-            <div class="w-14 h-14 rounded-xl bg-white border border-emerald-200 shadow-sm overflow-hidden flex items-center justify-center shrink-0">
-              <img src="カタカナ　PPT/カタカナ表　最新.JPG" alt="Katakana jadvali" class="w-full h-full object-cover">
+            <div class="w-14 h-14 rounded-xl bg-white border border-emerald-200 shadow-sm overflow-hidden flex items-center justify-center shrink-0 cursor-pointer" onclick="openOnlineViewer(17)">
+              <img src="/api/download-ppt?id=17" alt="Katakana jadvali" class="w-full h-full object-cover">
             </div>
             <div>
               <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-800">Rasmiy Alifbo Jadvali</span>
@@ -1934,10 +1934,10 @@
             </div>
           </div>
           <div class="flex items-center gap-2 w-full sm:w-auto shrink-0">
-            <a href="カタカナ　PPT/カタカナ表　最新.JPG" target="_blank" class="flex-1 sm:flex-none text-center px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold border border-slate-200 shadow-xs">
-              Ko'rish
-            </a>
-            <a href="カタカナ　PPT/カタカナ表　最新.JPG" download="Katakana_Jadvali.jpg" class="flex-1 sm:flex-none text-center px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs">
+            <button onclick="openOnlineViewer(17)" class="flex-1 sm:flex-none text-center px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold border border-slate-200 shadow-xs cursor-pointer">
+              👁️ Ko'rish
+            </button>
+            <a href="/api/download-ppt?id=17" download="Katakana_Jadvali.jpg" class="flex-1 sm:flex-none text-center px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs">
               Yuklab olish (JPG)
             </a>
           </div>
@@ -2579,13 +2579,13 @@
       if (empty) empty.classList.add('hidden');
 
       grid.innerHTML = filtered.map(item => {
-        const encodedUri = encodeURI('カタカナ　PPT/' + item.file);
+        const downloadUrl = `/api/download-ppt?id=${item.id}`;
         const isImg = item.isImage;
         const badgeColor = isImg ? 'bg-purple-100 text-purple-700' : 'bg-emerald-100 text-emerald-800';
         const slideBadge = isImg ? 'Poster' : `${item.slidesCount} slayd`;
 
         return `
-          <div class="p-4 rounded-2xl bg-white border border-rose-100/80 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all flex flex-col justify-between group">
+          <div onclick="openOnlineViewer(${item.id})" class="p-4 rounded-2xl bg-white border border-rose-100/80 shadow-sm hover:shadow-md hover:border-emerald-400 transition-all flex flex-col justify-between group cursor-pointer">
             <div>
               <div class="flex items-center justify-between gap-2 mb-2.5">
                 <span class="w-7 h-7 rounded-lg ${isImg ? 'bg-purple-500' : 'bg-emerald-600'} text-white font-black text-[10px] flex items-center justify-center shrink-0 shadow-xs">
@@ -2607,12 +2607,12 @@
               <span class="text-[10px] text-slate-400 truncate max-w-[100px]">
                 ${item.author ? 'Muallif: ' + item.author : 'Web Sayt'}
               </span>
-              <div class="flex items-center gap-1.5 shrink-0">
-                <button onclick="openOnlineViewer(${item.id})" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs">
-                  <span>👁️ Online ko'rish</span>
+              <div class="flex items-center gap-1.5 shrink-0" onclick="event.stopPropagation()">
+                <button onclick="openOnlineViewer(${item.id})" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold transition-all flex items-center gap-1 shadow-xs cursor-pointer">
+                  <span>👁️ Ko'rish</span>
                 </button>
-                <a href="${encodedUri}" ${isImg ? 'target="_blank"' : 'download'} class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors" title="Asl faylni yuklab olish">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                <a href="${downloadUrl}" download class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold transition-colors flex items-center gap-1" title="PPTX faylni yuklab olish">
+                  <span>⬇️ PPTX</span>
                 </a>
               </div>
             </div>
@@ -2636,7 +2636,7 @@
       
       const downloadBtn = document.getElementById('viewerDownloadBtn');
       if (downloadBtn) {
-        downloadBtn.href = encodeURI('カタカナ　PPT/' + item.file);
+        downloadBtn.href = `/api/download-ppt?id=${item.id}`;
       }
 
       // Build thumbnails strip
@@ -2645,7 +2645,7 @@
         if (item.isImage) {
           thumbsContainer.innerHTML = `
             <button onclick="showSlide(1)" class="p-1 rounded-lg border-2 border-emerald-500 bg-slate-800 shrink-0">
-              <img src="${encodeURI('カタカナ　PPT/' + item.file)}" class="w-16 h-10 object-cover rounded">
+              <img src="/api/download-ppt?id=${item.id}" class="w-16 h-10 object-cover rounded">
             </button>
           `;
         } else {
@@ -2693,7 +2693,7 @@
       const counter = document.getElementById('viewerCounter');
       
       if (currentViewingItem.isImage) {
-        img.src = encodeURI('カタカナ　PPT/' + currentViewingItem.file);
+        img.src = `/api/download-ppt?id=${currentViewingItem.id}`;
         if (counter) counter.textContent = '1 / 1 (Poster)';
       } else {
         img.src = `katakana_slides/${currentViewingItem.id}/slide_${index}.jpg`;

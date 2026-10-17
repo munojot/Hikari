@@ -79,7 +79,79 @@ const staticCacheOptions = {
 app.use('/assets', express.static(path.join(__dirname, 'assets'), staticCacheOptions));
 app.use('/katakana_slides', express.static(path.join(__dirname, 'katakana_slides'), staticCacheOptions));
 app.use('/E-learning', express.static(path.join(__dirname, 'E-learning'), staticCacheOptions));
-app.use('/カタカナ　PPT', express.static(path.join(__dirname, 'カタカナ　PPT'), staticCacheOptions));
+
+// Katakana PPT fayllari xaritasi (1-17)
+const PPT_DIR = path.resolve(__dirname, 'カタカナ　PPT');
+const KATAKANA_FILE_MAP = {
+  1: "1. e-learning ア行 _ラヒム.pptx",
+  2: "2. e-learning 「カ行」・ナフィサ.pptx",
+  3: "3. e-learning_サ行＿シリン＿final_final_.pptx",
+  4: "4. e-learning 「タ行」・ハビブロフ　修正.pptx",
+  5: "5. e - learning カタカナ ナ行.pptx",
+  6: "6. e-learning_ハ行＿ムニラ＿ 最後.pptx",
+  7: "7. e-learning マ行__サイヨラ oxirgisi.pptx",
+  8: "8. E-LEARNING ヤ　ユ　ヨ (oxirgi).pptx",
+  9: "10. e-learning ワ　ヲ　ン  (oxirgisi).pptx",
+  10: "11. e - learning カタカナ 長音 (1).pptx",
+  11: "12. e-learning 促音　ショヒルザ.pptx",
+  12: "13. e-learning　ガ、ザ、ダ行.pptx",
+  13: "14. e-learning　バ、パ行. oxirgisi.pptx",
+  14: "15. e-learning　チャ  ニャ  ミャ.pptx",
+  15: "16. e-learning   ヒャ・ビャ・ピャ・リャ.pptx",
+  16: "E-learning キャ、ギャ、シャ、ジャ.pptx",
+  17: "カタカナ表　最新.JPG"
+};
+
+// 1. Rasmiy PPT yuklab olish API (100% ishonchli, to'g'ri MIME type va xatosiz)
+app.get('/api/download-ppt', (req, res) => {
+  const id = parseInt(req.query.id, 10);
+  const filename = KATAKANA_FILE_MAP[id];
+  if (!id || !filename) {
+    return res.status(404).json({ error: "Taqdimot topilmadi (id 1 dan 17 gacha bo'lishi lozim)." });
+  }
+
+  const safeFilePath = path.resolve(PPT_DIR, filename);
+  if (!fs.existsSync(safeFilePath)) {
+    return res.status(404).json({ error: "Fayl serverda mavjud emas." });
+  }
+
+  if (filename.toLowerCase().endsWith('.jpg')) {
+    res.setHeader('Content-Type', 'image/jpeg');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.sendFile(safeFilePath);
+  }
+
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
+  res.setHeader('Content-Disposition', `attachment; filename="Katakana_Lesson_${id}.pptx"; filename*=UTF-8''${encodeURIComponent(filename)}`);
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  return res.sendFile(safeFilePath);
+});
+
+// 2. Maxsus middleware: /カタカナ　PPT/ va /katakana_ppt/ so'rovlarini to'g'ri dekodlash va uzatish
+app.use((req, res, next) => {
+  let decodedPath = '';
+  try {
+    decodedPath = decodeURIComponent(req.path);
+  } catch (e) {
+    return next();
+  }
+
+  if (decodedPath.startsWith('/カタカナ　PPT/') || decodedPath.startsWith('/katakana_ppt/')) {
+    const relFile = decodedPath.replace(/^\/(カタカナ　PPT|katakana_ppt)\//, '');
+    const safeFilePath = path.resolve(PPT_DIR, relFile);
+    if (safeFilePath.startsWith(PPT_DIR) && fs.existsSync(safeFilePath) && fs.statSync(safeFilePath).isFile()) {
+      if (safeFilePath.toLowerCase().endsWith('.jpg')) {
+        res.setHeader('Content-Type', 'image/jpeg');
+      } else if (safeFilePath.toLowerCase().endsWith('.pptx')) {
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
+        res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(path.basename(safeFilePath))}`);
+      }
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+      return res.sendFile(safeFilePath);
+    }
+  }
+  next();
+});
 
 // Maxsus ildiz fayllari (robots.txt, sitemap.xml, favicon)
 app.get('/robots.txt', (req, res) => {
