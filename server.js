@@ -42,6 +42,11 @@ const FORBIDDEN_FILE_PATTERNS = [
 ];
 
 app.use((req, res, next) => {
+  // 1. API so'rovlarini va POST arizalarni xavfsizlik statik tekshiruvidan ozod qilish
+  if (req.method === 'POST' || req.path.startsWith('/api') || (req.originalUrl && req.originalUrl.startsWith('/api'))) {
+    return next();
+  }
+
   let decodedPath = '';
   try {
     decodedPath = decodeURIComponent(req.path);

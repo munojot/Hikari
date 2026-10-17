@@ -2,8 +2,16 @@
   "version": 2,
   "rewrites": [
     {
+      "source": "/api/send-lead",
+      "destination": "/api/send-lead.js"
+    },
+    {
+      "source": "/api/download-ppt",
+      "destination": "/api/download-ppt.js"
+    },
+    {
       "source": "/api/(.*)",
-      "destination": "/server.js"
+      "destination": "/api/index.js"
     }
   ]
 }
