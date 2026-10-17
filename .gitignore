@@ -1,0 +1,25 @@
+# Antigravity agent files
+.agent/
+.agents/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Customer data & logs
+leads.json
+*.log
+
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# Large media files (exceeds GitHub 100MB limit and Vercel 100MB deployment limit)
+E-learning/*.mp4
+E-learning/*.MP4
+カタカナ　PPT/
+
+# Local temporary test scripts
+server_with_range.py
+test_e2e.js

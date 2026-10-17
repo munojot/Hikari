@@ -1,0 +1,24 @@
+{
+  "name": "hikari-group-website",
+  "version": "1.0.0",
+  "description": "Hikari Group Yapon tili akademiyasi landing sahifasi va Telegram bot integratsiyasi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test_verify.js"
+  },
+  "keywords": [
+    "hikari",
+    "japanese",
+    "express",
+    "telegram-bot"
+  ],
+  "author": "Hikari Group",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
