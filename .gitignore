@@ -15,11 +15,14 @@ leads.json
 node_modules/
 package-lock.json
 
-# Large media files (exceeds GitHub 100MB limit and Vercel 100MB deployment limit)
-E-learning/*.mp4
-E-learning/*.MP4
+# Large media & slides (keep only web code on GitHub)
+katakana_slides/
 カタカナ　PPT/
+E-learning/
 
-# Local temporary test scripts
-server_with_range.py
+# Internal brainstorms, tests and prompts
+brainstorms/
+Grill Me Prompt.md
+test_verify.js
 test_e2e.js
+server_with_range.py
