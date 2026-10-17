@@ -15,9 +15,7 @@ leads.json
 node_modules/
 package-lock.json
 
-# Large media & slides (keep only web code on GitHub)
-katakana_slides/
-カタカナ　PPT/
+# Local video files (hosted on Vimeo instead)
 E-learning/
 
 # Internal brainstorms, tests and prompts
