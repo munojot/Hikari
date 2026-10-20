@@ -36,16 +36,16 @@ module.exports = (req, res) => {
   }
 
   const stat = fs.statSync(safeFilePath);
-  if (filename.toLowerCase().endsWith('.jpg')) {
+  if (id === 17 && filename.toLowerCase().endsWith('.jpg')) {
     res.setHeader('Content-Type', 'image/jpeg');
     res.setHeader('Content-Length', stat.size);
     res.setHeader('Cache-Control', 'public, max-age=86400');
     return fs.createReadStream(safeFilePath).pipe(res);
   }
 
-  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
-  res.setHeader('Content-Length', stat.size);
-  res.setHeader('Content-Disposition', `attachment; filename="Katakana_Lesson_${id}.pptx"; filename*=UTF-8''${encodeURIComponent(filename)}`);
-  res.setHeader('Cache-Control', 'public, max-age=86400');
-  return fs.createReadStream(safeFilePath).pipe(res);
+  // PPTX fayllarni yuklab olish qat'iy taqiqlangan
+  return res.status(403).json({
+    success: false,
+    error: "Taqdimotlarni yuklab olish taqiqlangan. Barcha materiallar faqat sayt orqali online ko'rish uchun mo'ljallangan."
+  });
 };

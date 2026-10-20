@@ -82,6 +82,8 @@ const staticCacheOptions = {
 
 // Ruxsat etilgan statik kataloglar
 app.use('/assets', express.static(path.join(__dirname, 'assets'), staticCacheOptions));
+app.use('/hiragana_gif', express.static(path.join(__dirname, 'hiragana_gif'), staticCacheOptions));
+app.use('/hiragana gif', express.static(path.join(__dirname, 'hiragana_gif'), staticCacheOptions));
 app.use('/katakana_slides', express.static(path.join(__dirname, 'katakana_slides'), staticCacheOptions));
 app.use('/E-learning', express.static(path.join(__dirname, 'E-learning'), staticCacheOptions));
 
@@ -107,12 +109,12 @@ const KATAKANA_FILE_MAP = {
   17: "カタカナ表　最新.JPG"
 };
 
-// 1. Rasmiy PPT yuklab olish API (100% ishonchli, to'g'ri MIME type va xatosiz)
+// 1. Rasmiy PPT API (PPT fayllarni yuklab olish taqiqlangan — faqat online ko'rish)
 app.get('/api/download-ppt', (req, res) => {
   const id = parseInt(req.query.id, 10);
   const filename = KATAKANA_FILE_MAP[id];
   if (!id || !filename) {
-    return res.status(404).json({ error: "Taqdimot topilmadi (id 1 dan 17 gacha bo'lishi lozim)." });
+    return res.status(404).json({ error: "Material topilmadi (id 1 dan 17 gacha bo'lishi lozim)." });
   }
 
   const safeFilePath = path.resolve(PPT_DIR, filename);
@@ -120,19 +122,21 @@ app.get('/api/download-ppt', (req, res) => {
     return res.status(404).json({ error: "Fayl serverda mavjud emas." });
   }
 
-  if (filename.toLowerCase().endsWith('.jpg')) {
+  // Faqat 17-fayl (Katakana jadvali rasmi) bannerda rasm ko'rinishida ko'rsatiladi
+  if (id === 17 && filename.toLowerCase().endsWith('.jpg')) {
     res.setHeader('Content-Type', 'image/jpeg');
     res.setHeader('Cache-Control', 'public, max-age=86400');
     return res.sendFile(safeFilePath);
   }
 
-  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
-  res.setHeader('Content-Disposition', `attachment; filename="Katakana_Lesson_${id}.pptx"; filename*=UTF-8''${encodeURIComponent(filename)}`);
-  res.setHeader('Cache-Control', 'public, max-age=86400');
-  return res.sendFile(safeFilePath);
+  // Barcha PPT fayllarni yuklab olish qat'iy taqiqlangan
+  return res.status(403).json({
+    success: false,
+    error: "Taqdimotlarni yuklab olish taqiqlangan. Barcha materiallar faqat sayt orqali online ko'rish uchun mo'ljallangan."
+  });
 });
 
-// 2. Maxsus middleware: /カタカナ　PPT/ va /katakana_ppt/ so'rovlarini to'g'ri dekodlash va uzatish
+// 2. Maxsus middleware: /カタカナ　PPT/ va /katakana_ppt/ so'rovlari (Faqat JPG rasmlar ochiq, PPTX bloklangan)
 app.use((req, res, next) => {
   let decodedPath = '';
   try {
@@ -147,12 +151,12 @@ app.use((req, res, next) => {
     if (safeFilePath.startsWith(PPT_DIR) && fs.existsSync(safeFilePath) && fs.statSync(safeFilePath).isFile()) {
       if (safeFilePath.toLowerCase().endsWith('.jpg')) {
         res.setHeader('Content-Type', 'image/jpeg');
-      } else if (safeFilePath.toLowerCase().endsWith('.pptx')) {
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
-        res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(path.basename(safeFilePath))}`);
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        return res.sendFile(safeFilePath);
       }
-      res.setHeader('Cache-Control', 'public, max-age=86400');
-      return res.sendFile(safeFilePath);
+      return res.status(403).json({
+        error: "Fayllarni yuklab olish taqiqlangan. Faqat sayt orqali online ko'rish mumkin."
+      });
     }
   }
   next();

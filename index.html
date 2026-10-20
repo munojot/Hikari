@@ -783,7 +783,7 @@
                 </span>
                 <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/70">
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  <span>5 Bosqichli Tizim</span>
+                  <span>Alifbo + 5 Daraja</span>
                 </span>
               </div>
 
@@ -792,8 +792,27 @@
                 光
               </div>
 
-              <!-- 5 Level Rows Container (Middle Section, flex-1) -->
+              <!-- 6 Level & Alifbo Rows Container (Middle Section, flex-1) -->
               <div class="p-3 sm:p-3.5 space-y-1.5 relative z-10 flex-1 flex flex-col justify-center">
+                <!-- Alifbo Row: Hiragana (平仮名) -->
+                <div class="p-2 rounded-xl bg-gradient-to-r from-rose-50/70 via-white/90 to-amber-50/50 border border-rose-200/80 hover:border-rose-400/90 hover:shadow-xs transition-all flex items-center justify-between gap-2 group cursor-pointer" onclick="openHiraganaModal()" title="Alifboni o'rganamiz — Hiragana harflari va yozish animatsiyalari">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-rose-500 via-pink-500 to-amber-400 text-white flex items-center justify-center shrink-0 shadow-xs shadow-rose-900/20 ring-1 ring-rose-300/80 group-hover:scale-105 transition-transform">
+                      <span class="font-jp font-black text-base sm:text-lg leading-none text-white drop-shadow-xs">あ</span>
+                      <span class="absolute -bottom-1 -right-1 px-1 py-0.2 rounded bg-slate-900/95 text-rose-300 font-black text-[8px] shadow-2xs border border-rose-300 leading-none">
+                        A0
+                      </span>
+                    </div>
+                    <div class="truncate">
+                      <p class="text-xs font-bold text-slate-800 truncate">Alifboni o'rganamiz</p>
+                      <p class="text-[10px] text-slate-500 truncate">Hiragana, Yozish animatsiyalari (GIF)</p>
+                    </div>
+                  </div>
+                  <button onclick="event.stopPropagation(); openHiraganaModal()" class="px-2 py-1 rounded-lg bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white text-[10px] font-black shadow-2xs flex items-center gap-1 shrink-0 transition-transform group-hover:scale-105">
+                    <span>🔤 23 Harf</span>
+                  </button>
+                </div>
+
                 <!-- N5 Row: Wagasa (和傘) -->
                 <div class="p-2 rounded-xl bg-gradient-to-r from-cyan-50/40 via-white/80 to-teal-50/30 border border-cyan-200/70 hover:border-cyan-400/80 hover:shadow-xs transition-all flex items-center justify-between gap-2 group cursor-pointer" onclick="openKatakanaModal()" title="N5 — 17 ta Katakana taqdimotini online ochish">
                   <div class="flex items-center gap-2.5 min-w-0">
@@ -1873,6 +1892,117 @@
   </div>
 
 
+  <!-- ================= HIRAGANA ALIFBO ANIMATSIYALARI MODAL ================= -->
+  <div id="hiraganaModal" class="fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-[#FFFDFB] rounded-3xl max-w-5xl w-full my-auto shadow-2xl border border-rose-200/80 overflow-hidden flex flex-col max-h-[92vh]">
+      
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 text-white relative shrink-0">
+        <!-- Close Button -->
+        <button onclick="closeHiraganaModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition-colors cursor-pointer" title="Yopish">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-extrabold uppercase tracking-wide">
+            Japon Alifbosi · Hiragana (平仮名)
+          </span>
+          <span class="text-xs text-rose-200">1-qism · 23 ta Harf</span>
+        </div>
+
+        <h3 class="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-2.5">
+          <span>Alifboni o'rganamiz</span>
+          <span class="px-2.5 py-0.5 rounded-lg bg-white/20 text-white text-xs font-bold">23 ta jonli animatsiya</span>
+        </h3>
+        <p class="text-xs sm:text-sm text-rose-100 mt-1 max-w-2xl leading-relaxed">
+          Yapon tili Hiragana alifbosining dastlabki yarmi. Har bir harfning to'g'ri chiziq chizish ketma-ketligi (stroke order) bo'yicha jonli GIF animatsiyalari bilan o'rganing! Har bir kartochkani bosib, harfni katta formatda ko'rishingiz mumkin.
+        </p>
+
+        <!-- Search & Filter Controls -->
+        <div class="mt-4 pt-4 border-t border-white/15 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+          <!-- Search input -->
+          <div class="relative flex-1 max-w-md">
+            <input type="text" id="hiraganaSearch" oninput="handleHiraganaSearch(this.value)" placeholder="Harf yoki romajini qidirish (masalan: a, ka, さ, ta, ni)..." class="w-full pl-9 pr-4 py-2 rounded-xl bg-white/10 border border-white/25 text-white placeholder-rose-200 text-xs focus:outline-none focus:ring-2 focus:ring-white/40">
+            <svg class="w-4 h-4 text-rose-200 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+
+          <!-- Quick Filters -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs scrollbar-none">
+            <button onclick="filterHiragana('all')" class="hg-filter active px-3 py-1.5 rounded-lg bg-white text-rose-900 font-bold shrink-0 shadow-xs cursor-pointer" data-hcat="all">Barchasi (23)</button>
+            <button onclick="filterHiragana('a')" class="hg-filter px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold shrink-0 cursor-pointer" data-hcat="a">A-guruhi (5)</button>
+            <button onclick="filterHiragana('ka')" class="hg-filter px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold shrink-0 cursor-pointer" data-hcat="ka">Ka-guruhi (5)</button>
+            <button onclick="filterHiragana('sa')" class="hg-filter px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold shrink-0 cursor-pointer" data-hcat="sa">Sa-guruhi (5)</button>
+            <button onclick="filterHiragana('ta')" class="hg-filter px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold shrink-0 cursor-pointer" data-hcat="ta">Ta-guruhi (5)</button>
+            <button onclick="filterHiragana('na')" class="hg-filter px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold shrink-0 cursor-pointer" data-hcat="na">Na-guruhi (3)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Body (Scrollable Grid) -->
+      <div class="p-4 sm:p-6 overflow-y-auto flex-1 bg-[#FDFBF7]">
+        
+        <!-- Featured Interactive Letter Showcase (When a letter is clicked) -->
+        <div id="hiraganaShowcase" class="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-rose-50 via-pink-50 to-amber-50 border border-rose-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-5">
+          <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto text-center sm:text-left">
+            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-rose-200/80 shadow-md p-2 flex items-center justify-center shrink-0">
+              <img id="showcaseGif" src="hiragana_gif/a.gif" alt="Hiragana stroke order" class="w-full h-full object-contain pointer-events-none select-none">
+            </div>
+            <div>
+              <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                <span id="showcaseChar" class="font-jp font-black text-3xl sm:text-4xl text-rose-700 leading-none">あ</span>
+                <span id="showcaseRomaji" class="text-xl sm:text-2xl font-black text-slate-900 tracking-wide">A</span>
+                <span id="showcaseGroup" class="px-2 py-0.5 rounded text-[11px] font-extrabold bg-rose-100 text-rose-800">A-guruhi</span>
+              </div>
+              <p id="showcaseTip" class="text-xs sm:text-sm text-slate-700 font-medium">O'zbek tilidagi oddiy "A" tovushi kabi talaffuz qilinadi.</p>
+              <div class="mt-2 flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs text-slate-600">
+                <span class="px-2.5 py-1 rounded-lg bg-white/90 border border-rose-200/60 font-semibold flex items-center gap-1.5 shadow-2xs">
+                  <span>✍️</span> <span id="showcaseStrokes">3 ta chiziq (Stroke order)</span>
+                </span>
+                <span class="px-2.5 py-1 rounded-lg bg-white/90 border border-rose-200/60 font-semibold flex items-center gap-1.5 shadow-2xs">
+                  <span>📖</span> <span>Masalan:</span> <strong id="showcaseExample" class="text-rose-700">あめ (Ame — Yomg'ir)</strong>
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Prev / Next Nav Buttons for Showcase -->
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="prevHiraganaLetter()" class="px-3.5 py-2 rounded-xl bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-700 text-xs font-bold border border-rose-200 shadow-2xs transition-all flex items-center gap-1 cursor-pointer">
+              <span>← Oldingi</span>
+            </button>
+            <button onclick="nextHiraganaLetter()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-2xs transition-all flex items-center gap-1 cursor-pointer">
+              <span>Keyingi →</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 23 Hiragana Letters Grid -->
+        <div id="hiraganaGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Empty state -->
+        <div id="hiraganaEmpty" class="hidden py-12 text-center text-slate-400">
+          <p class="text-2xl mb-1">🔍</p>
+          <p class="text-sm font-semibold">Qidiruvingiz bo'yicha harf topilmadi</p>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3.5 bg-white border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500 shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+          <span>🔒 Barcha animatsiyalar faqat <strong>Hikari Group</strong> platformasida online o'rganish uchun himoyalangan</span>
+        </div>
+        <button onclick="closeHiraganaModal()" class="px-4 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold cursor-pointer">
+          Yopish
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
   <!-- ================= KATAKANA PPT & E-LEARNING MODAL ================= -->
   <div id="katakanaModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 overflow-y-auto">
     <div class="bg-[#FFFDFB] rounded-3xl max-w-4xl w-full my-auto shadow-2xl border border-rose-200/80 overflow-hidden flex flex-col max-h-[90vh]">
@@ -1896,7 +2026,7 @@
           <span class="px-2.5 py-0.5 rounded-lg bg-emerald-500/40 text-emerald-100 text-xs font-bold">17 ta material</span>
         </h3>
         <p class="text-xs sm:text-sm text-emerald-100 mt-1 max-w-2xl leading-relaxed">
-          «Web Sayt» papkasidagi barcha Katakana e-learning darsliklari taqdimotlari (PPTX) va to'liq Katakana alifbosi jadvali. Istalgan taqdimotni yuklab olib o'rganishingiz mumkin!
+          «Hikari Group» platformasidagi barcha Katakana darsliklari taqdimotlari va to'liq Katakana alifbosi jadvali. Barcha slaydlarni to'g'ridan-to'g'ri online ko'rib o'rganishingiz mumkin!
         </p>
 
         <!-- Search & Filter Controls -->
@@ -1934,12 +2064,9 @@
             </div>
           </div>
           <div class="flex items-center gap-2 w-full sm:w-auto shrink-0">
-            <button onclick="openOnlineViewer(17)" class="flex-1 sm:flex-none text-center px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold border border-slate-200 shadow-xs cursor-pointer">
-              👁️ Ko'rish
+            <button onclick="openOnlineViewer(17)" class="w-full sm:w-auto text-center px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs cursor-pointer flex items-center justify-center gap-1.5">
+              <span>👁️ Jadvalni ko'rish</span>
             </button>
-            <a href="/api/download-ppt?id=17" download="Katakana_Jadvali.jpg" class="flex-1 sm:flex-none text-center px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs">
-              Yuklab olish (JPG)
-            </a>
           </div>
         </div>
 
@@ -1959,7 +2086,7 @@
       <div class="px-6 py-3.5 bg-white border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500 shrink-0">
         <div class="flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>Barcha taqdimotlar <strong>Web Sayt/カタカナ　PPT</strong> papkasidan to'g'ridan-to'g'ri yuklanadi</span>
+          <span>🔒 Barcha taqdimotlar faqat platformada online ko'rish uchun himoyalangan (yuklab olish taqiqlangan)</span>
         </div>
         <button onclick="closeKatakanaModal()" class="px-4 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">
           Yopish
@@ -1987,13 +2114,13 @@
       </div>
 
       <div class="flex items-center gap-2 shrink-0">
-        <!-- Open on Vimeo button -->
-        <a href="https://vimeo.com/1236822404" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors" title="Vimeoda ochish">
-          <svg class="w-3.5 h-3.5 text-sky-400" fill="currentColor" viewBox="0 0 24 24"><path d="M22.84 6.84c-.1-.73-.55-1.32-1.3-1.63-1.15-.47-3.07-.46-4.64.44-1.29.74-2.5 1.94-3.59 3.55-1.46-2.3-3.09-3.46-4.9-3.46-1.5 0-2.81.79-3.92 2.37-1.1 1.58-1.66 3.48-1.66 5.69 0 2.87.97 5.25 2.91 7.14 1.94 1.89 4.3 2.84 7.07 2.84 2.38 0 4.54-.7 6.47-2.11 1.93-1.41 3.23-3.26 3.9-5.55.51-1.74.76-3.43.76-5.07 0-1.47-.03-2.87-.1-4.21z"/></svg>
-          <span>Vimeo'da ochish</span>
-        </a>
+        <!-- Protected Online Streaming Badge -->
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700">
+          <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <span>Online ko'rish rejimi</span>
+        </span>
         <!-- Close button -->
-        <button onclick="closeN4VideoModal()" class="p-2 rounded-lg bg-rose-600/80 hover:bg-rose-600 text-white transition-colors" title="Yopish (Esc)">
+        <button onclick="closeN4VideoModal()" class="p-2 rounded-lg bg-rose-600/80 hover:bg-rose-600 text-white transition-colors cursor-pointer" title="Yopish (Esc)">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
@@ -2001,10 +2128,10 @@
 
     <!-- Center Stage: Vimeo Player -->
     <div class="relative flex-1 flex items-center justify-center p-2 sm:p-6 overflow-hidden">
-      <div class="relative max-w-5xl w-full aspect-video flex items-center justify-center shadow-2xl rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-slate-800">
+      <div class="relative max-w-5xl w-full aspect-video flex items-center justify-center shadow-2xl rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-slate-800" oncontextmenu="return false;">
         <iframe 
           id="n4VimeoIframe"
-          src="https://player.vimeo.com/video/1236822404?title=0&byline=0&portrait=0" 
+          src="https://player.vimeo.com/video/1236822404?title=0&byline=0&portrait=0&dnt=1" 
           class="w-full h-full" 
           frameborder="0" 
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
@@ -2022,10 +2149,9 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <a href="https://vimeo.com/1236822404" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition-colors flex items-center gap-1.5">
-          <span>Vimeo ilovasida ochish</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-        </a>
+        <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-400 text-[11px] font-medium border border-slate-700/80 flex items-center gap-1">
+          <span>🔒</span> <span>Yuklab olish taqiqlangan · Faqat platformada ko'rish mumkin</span>
+        </span>
       </div>
     </div>
 
@@ -2050,16 +2176,16 @@
 
       <div class="flex items-center gap-2 shrink-0">
         <!-- Fullscreen Button -->
-        <button onclick="toggleViewerFullscreen()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors" title="To'liq ekran">
+        <button onclick="toggleViewerFullscreen()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer" title="To'liq ekran">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
         </button>
-        <!-- Download original PPT button -->
-        <a id="viewerDownloadBtn" href="#" download class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors" title="Faylni yuklab olish">
-          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-          <span>Faylni yuklab olish</span>
-        </a>
+        <!-- Protected Online Slide Badge -->
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-medium border border-slate-700 select-none">
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <span>Faqat online ko'rish</span>
+        </span>
         <!-- Close button -->
-        <button onclick="closeOnlineViewer()" class="p-2 rounded-lg bg-rose-600/80 hover:bg-rose-600 text-white transition-colors" title="Yopish (Esc)">
+        <button onclick="closeOnlineViewer()" class="p-2 rounded-lg bg-rose-600/80 hover:bg-rose-600 text-white transition-colors cursor-pointer" title="Yopish (Esc)">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
@@ -2314,6 +2440,180 @@
       document.addEventListener('DOMContentLoaded', initSakuraPetals);
     } else {
       initSakuraPetals();
+    }
+
+    // ================= 5.5. HIRAGANA ALPHABET DATASET & CONTROLLER =================
+    const hiraganaLetters = [
+      // 1. A-guruhi (5 ta harf)
+      { id: 1, char: 'あ', romaji: 'A', group: 'a', groupName: 'A-guruhi', strokes: 3, file: 'a.gif', example: 'あめ (Ame)', meaning: "Yomg'ir / Shirinlik", tip: "Oddiy, ochiq 'A' tovushi" },
+      { id: 2, char: 'い', romaji: 'I', group: 'a', groupName: 'A-guruhi', strokes: 2, file: 'i.gif', example: 'いぬ (Inu)', meaning: "Kuchuk / It", tip: "O'zbek tilidagi 'I' kabi" },
+      { id: 3, char: 'う', romaji: 'U', group: 'a', groupName: 'A-guruhi', strokes: 2, file: 'u.gif', example: 'うみ (Umi)', meaning: "Dengiz", tip: "Labni cho'zmasdan talaffuz qilinadi" },
+      { id: 4, char: 'え', romaji: 'E', group: 'a', groupName: 'A-guruhi', strokes: 2, file: 'e.gif', example: 'えき (Eki)', meaning: "Poyezd bekati", tip: "O'zbek tilidagi 'E' kabi" },
+      { id: 5, char: 'お', romaji: 'O', group: 'a', groupName: 'A-guruhi', strokes: 3, file: 'o.gif', example: 'おちゃ (Ocha)', meaning: "Yashil choy", tip: "O'zbek tilidagi 'O' kabi" },
+
+      // 2. Ka-guruhi (5 ta harf)
+      { id: 6, char: 'か', romaji: 'Ka', group: 'ka', groupName: 'Ka-guruhi', strokes: 3, file: 'ka.gif', example: 'かさ (Kasa)', meaning: "Soyabon", tip: "K va A tovushlari birikmasi" },
+      { id: 7, char: 'き', romaji: 'Ki', group: 'ka', groupName: 'Ka-guruhi', strokes: 4, file: 'ki.gif', example: 'き (Ki)', meaning: "Daraxt", tip: "K va I tovushlari birikmasi" },
+      { id: 8, char: 'く', romaji: 'Ku', group: 'ka', groupName: 'Ka-guruhi', strokes: 1, file: 'ku.gif', example: 'くるま (Kuruma)', meaning: "Avtomobil", tip: "1 ta uzluksiz chiziq bilan yoziladi" },
+      { id: 9, char: 'け', romaji: 'Ke', group: 'ka', groupName: 'Ka-guruhi', strokes: 3, file: 'ke.gif', example: 'けむり (Kemuri)', meaning: "Tutun", tip: "K va E tovushlari birikmasi" },
+      { id: 10, char: 'こ', romaji: 'Ko', group: 'ka', groupName: 'Ka-guruhi', strokes: 2, file: 'ko.gif', example: 'こども (Kodomo)', meaning: "Bola", tip: "2 ta parallel chiziq" },
+
+      // 3. Sa-guruhi (5 ta harf)
+      { id: 11, char: 'さ', romaji: 'Sa', group: 'sa', groupName: 'Sa-guruhi', strokes: 3, file: 'sa.gif', example: 'さくら (Sakura)', meaning: "Gilos guli", tip: "S va A tovushlari birikmasi" },
+      { id: 12, char: 'し', romaji: 'Shi', group: 'sa', groupName: 'Sa-guruhi', strokes: 1, file: 'shi.gif', example: 'しお (Shio)', meaning: "Tuz", tip: "Yumshoq 'Shi' tovushi" },
+      { id: 13, char: 'す', romaji: 'Su', group: 'sa', groupName: 'Sa-guruhi', strokes: 2, file: 'su.gif', example: 'すし (Sushi)', meaning: "Sushi taomi", tip: "O'rtasida aylanma halqasi bor" },
+      { id: 14, char: 'せ', romaji: 'Se', group: 'sa', groupName: 'Sa-guruhi', strokes: 3, file: 'se.gif', example: 'せんせい (Sensei)', meaning: "Ustoz / Muallim", tip: "S va E tovushlari birikmasi" },
+      { id: 15, char: 'そ', romaji: 'So', group: 'sa', groupName: 'Sa-guruhi', strokes: 1, file: 'so.gif', example: 'そら (Sora)', meaning: "Osmon", tip: "Zigzag shaklidagi 1 ta chiziq" },
+
+      // 4. Ta-guruhi (5 ta harf)
+      { id: 16, char: 'た', romaji: 'Ta', group: 'ta', groupName: 'Ta-guruhi', strokes: 4, file: 'ta.gif', example: 'たまご (Tamago)', meaning: "Tuxum", tip: "T va A tovushlari birikmasi" },
+      { id: 17, char: 'ち', romaji: 'Chi', group: 'ta', groupName: 'Ta-guruhi', strokes: 2, file: 'chi.gif', example: 'ちず (Chizu)', meaning: "Xarita", tip: "Yumshoq 'Chi' tovushi" },
+      { id: 18, char: 'つ', romaji: 'Tsu', group: 'ta', groupName: 'Ta-guruhi', strokes: 1, file: 'tsu.gif', example: 'つき (Tsuki)', meaning: "Oy (osmondagi)", tip: "'Ts' tovushi (nemischa Z kabi)" },
+      { id: 19, char: 'て', romaji: 'Te', group: 'ta', groupName: 'Ta-guruhi', strokes: 1, file: 'te.gif', example: 'て (Te)', meaning: "Qo'l", tip: "1 ta chiziqda yoziladi" },
+      { id: 20, char: 'と', romaji: 'To', group: 'ta', groupName: 'Ta-guruhi', strokes: 2, file: 'to.gif', example: 'ともだち (Tomodachi)', meaning: "Do'st", tip: "T va O tovushlari birikmasi" },
+
+      // 5. Na-guruhi (3 ta harf — jami yarmi: 23 ta harf)
+      { id: 21, char: 'な', romaji: 'Na', group: 'na', groupName: 'Na-guruhi', strokes: 4, file: 'na.gif', example: 'なつ (Natsu)', meaning: "Yoz fasli", tip: "N va A tovushlari birikmasi" },
+      { id: 22, char: 'に', romaji: 'Ni', group: 'na', groupName: 'Na-guruhi', strokes: 3, file: 'ni.gif', example: 'にほん (Nihon)', meaning: "Yaponiya", tip: "N va I tovushlari birikmasi" },
+      { id: 23, char: 'ぬ', romaji: 'Nu', group: 'na', groupName: 'Na-guruhi', strokes: 2, file: 'nu.gif', example: 'ぬの (Nuno)', meaning: "Mato / Gazlama", tip: "Oxirida kichik halqasi bor" }
+    ];
+
+    let currentHiraganaCat = 'all';
+    let currentHiraganaSearch = '';
+    let selectedHiraganaIndex = 0;
+
+    function openHiraganaModal() {
+      const modal = document.getElementById('hiraganaModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+        renderHiraganaGrid();
+        selectHiraganaLetter(0);
+      }
+    }
+
+    function closeHiraganaModal() {
+      const modal = document.getElementById('hiraganaModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    function filterHiragana(cat) {
+      currentHiraganaCat = cat;
+      document.querySelectorAll('.hg-filter').forEach(btn => {
+        if (btn.getAttribute('data-hcat') === cat) {
+          btn.classList.add('bg-white', 'text-rose-900', 'active', 'shadow-xs');
+          btn.classList.remove('bg-white/10', 'text-white');
+        } else {
+          btn.classList.remove('bg-white', 'text-rose-900', 'active', 'shadow-xs');
+          btn.classList.add('bg-white/10', 'text-white');
+        }
+      });
+      renderHiraganaGrid();
+    }
+
+    function handleHiraganaSearch(val) {
+      currentHiraganaSearch = (val || '').toLowerCase().trim();
+      renderHiraganaGrid();
+    }
+
+    function selectHiraganaLetter(idx) {
+      if (idx < 0 || idx >= hiraganaLetters.length) return;
+      selectedHiraganaIndex = idx;
+      const item = hiraganaLetters[idx];
+
+      const gif = document.getElementById('showcaseGif');
+      const charEl = document.getElementById('showcaseChar');
+      const romajiEl = document.getElementById('showcaseRomaji');
+      const groupEl = document.getElementById('showcaseGroup');
+      const tipEl = document.getElementById('showcaseTip');
+      const strokesEl = document.getElementById('showcaseStrokes');
+      const exampleEl = document.getElementById('showcaseExample');
+
+      if (gif) gif.src = `hiragana_gif/${item.file}`;
+      if (charEl) charEl.textContent = item.char;
+      if (romajiEl) romajiEl.textContent = item.romaji;
+      if (groupEl) groupEl.textContent = item.groupName;
+      if (tipEl) tipEl.textContent = item.tip;
+      if (strokesEl) strokesEl.textContent = `${item.strokes} ta chiziq (Stroke order)`;
+      if (exampleEl) exampleEl.textContent = `${item.example} — ${item.meaning}`;
+
+      // Update grid highlight
+      document.querySelectorAll('.hiragana-card').forEach(card => {
+        const cardId = Number(card.getAttribute('data-hid'));
+        if (cardId === item.id) {
+          card.classList.add('ring-2', 'ring-rose-500', 'border-rose-400', 'bg-rose-50/50');
+        } else {
+          card.classList.remove('ring-2', 'ring-rose-500', 'border-rose-400', 'bg-rose-50/50');
+        }
+      });
+    }
+
+    function prevHiraganaLetter() {
+      let nextIdx = selectedHiraganaIndex - 1;
+      if (nextIdx < 0) nextIdx = hiraganaLetters.length - 1;
+      selectHiraganaLetter(nextIdx);
+    }
+
+    function nextHiraganaLetter() {
+      let nextIdx = selectedHiraganaIndex + 1;
+      if (nextIdx >= hiraganaLetters.length) nextIdx = 0;
+      selectHiraganaLetter(nextIdx);
+    }
+
+    function renderHiraganaGrid() {
+      const grid = document.getElementById('hiraganaGrid');
+      const empty = document.getElementById('hiraganaEmpty');
+      if (!grid) return;
+
+      const filtered = hiraganaLetters.filter(item => {
+        const matchesCat = currentHiraganaCat === 'all' || item.group === currentHiraganaCat;
+        const matchesSearch = !currentHiraganaSearch ||
+          item.char.toLowerCase().includes(currentHiraganaSearch) ||
+          item.romaji.toLowerCase().includes(currentHiraganaSearch) ||
+          item.example.toLowerCase().includes(currentHiraganaSearch) ||
+          item.meaning.toLowerCase().includes(currentHiraganaSearch);
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+
+      if (empty) empty.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(item => {
+        const isSelected = hiraganaLetters[selectedHiraganaIndex] && hiraganaLetters[selectedHiraganaIndex].id === item.id;
+        const selectedCls = isSelected ? 'ring-2 ring-rose-500 border-rose-400 bg-rose-50/50' : 'border-rose-100/90 bg-white';
+
+        return `
+          <div onclick="selectHiraganaLetter(${item.id - 1})" data-hid="${item.id}" class="hiragana-card p-3 rounded-2xl ${selectedCls} border shadow-xs hover:shadow-md hover:border-rose-300 transition-all flex flex-col items-center text-center group cursor-pointer select-none" oncontextmenu="return false;">
+            <div class="w-full flex items-center justify-between text-[10px] text-slate-400 mb-1">
+              <span class="font-extrabold text-rose-600 bg-rose-50 px-1.5 py-0.2 rounded">${item.groupName}</span>
+              <span class="text-slate-400">${item.strokes} ta chiziq</span>
+            </div>
+            
+            <div class="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center my-1">
+              <img src="hiragana_gif/${item.file}" alt="${item.char}" loading="lazy" class="w-full h-full object-contain pointer-events-none">
+            </div>
+
+            <div class="w-full pt-1.5 border-t border-slate-100 flex items-center justify-center gap-1.5">
+              <span class="font-jp font-black text-xl text-slate-900 group-hover:text-rose-600 transition-colors">${item.char}</span>
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wide">(${item.romaji})</span>
+            </div>
+
+            <p class="text-[10px] text-slate-500 truncate w-full mt-1" title="${item.example}: ${item.meaning}">
+              ${item.example}
+            </p>
+          </div>
+        `;
+      }).join('');
     }
 
     // ================= 6. KATAKANA PPT DATASET & ONLINE SLIDE VIEWER =================
@@ -2579,13 +2879,12 @@
       if (empty) empty.classList.add('hidden');
 
       grid.innerHTML = filtered.map(item => {
-        const downloadUrl = `/api/download-ppt?id=${item.id}`;
         const isImg = item.isImage;
         const badgeColor = isImg ? 'bg-purple-100 text-purple-700' : 'bg-emerald-100 text-emerald-800';
         const slideBadge = isImg ? 'Poster' : `${item.slidesCount} slayd`;
 
         return `
-          <div onclick="openOnlineViewer(${item.id})" class="p-4 rounded-2xl bg-white border border-rose-100/80 shadow-sm hover:shadow-md hover:border-emerald-400 transition-all flex flex-col justify-between group cursor-pointer">
+          <div onclick="openOnlineViewer(${item.id})" class="p-4 rounded-2xl bg-white border border-rose-100/80 shadow-sm hover:shadow-md hover:border-emerald-400 transition-all flex flex-col justify-between group cursor-pointer" oncontextmenu="return false;">
             <div>
               <div class="flex items-center justify-between gap-2 mb-2.5">
                 <span class="w-7 h-7 rounded-lg ${isImg ? 'bg-purple-500' : 'bg-emerald-600'} text-white font-black text-[10px] flex items-center justify-center shrink-0 shadow-xs">
@@ -2608,12 +2907,9 @@
                 ${item.author ? 'Muallif: ' + item.author : 'Web Sayt'}
               </span>
               <div class="flex items-center gap-1.5 shrink-0" onclick="event.stopPropagation()">
-                <button onclick="openOnlineViewer(${item.id})" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold transition-all flex items-center gap-1 shadow-xs cursor-pointer">
-                  <span>👁️ Ko'rish</span>
+                <button onclick="openOnlineViewer(${item.id})" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs cursor-pointer">
+                  <span>👁️ Slaydlarni ko'rish</span>
                 </button>
-                <a href="${downloadUrl}" download class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold transition-colors flex items-center gap-1" title="PPTX faylni yuklab olish">
-                  <span>⬇️ PPTX</span>
-                </a>
               </div>
             </div>
           </div>
@@ -2633,11 +2929,6 @@
       document.getElementById('viewerMeta').textContent = item.isImage 
         ? "1 ta to'liq poster rasm · " + item.desc
         : `${item.slidesCount} ta slayd · Web Sayt E-learning darsligi · Muallif: ${item.author}`;
-      
-      const downloadBtn = document.getElementById('viewerDownloadBtn');
-      if (downloadBtn) {
-        downloadBtn.href = `/api/download-ppt?id=${item.id}`;
-      }
 
       // Build thumbnails strip
       const thumbsContainer = document.getElementById('viewerThumbnails');
@@ -2821,6 +3112,22 @@
 
     // Keyboard Navigation
     document.addEventListener('keydown', (e) => {
+      // 0. Hiragana Alphabet Modal
+      const hgModal = document.getElementById('hiraganaModal');
+      const isHgOpen = hgModal && !hgModal.classList.contains('hidden');
+      if (isHgOpen) {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          nextHiraganaLetter();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          prevHiraganaLetter();
+        } else if (e.key === 'Escape') {
+          closeHiraganaModal();
+        }
+        return;
+      }
+
       // 1. N4 Video Player Modal
       const n4Modal = document.getElementById('n4VideoModal');
       const isN4VideoOpen = n4Modal && !n4Modal.classList.contains('hidden');
@@ -2860,6 +3167,7 @@
 
       // 3. Other Modals
       if (e.key === 'Escape') {
+        closeHiraganaModal();
         closeN4VideoModal();
         closeKatakanaModal();
         closeSuccessModal();
